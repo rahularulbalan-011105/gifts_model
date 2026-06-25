@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: giftpartner-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: giftpartner
+    ports:
+      # Host 5434 -> container 5432 (5433 is already used by another local Postgres).
+      - "5434:5432"
+    volumes:
+      - giftpartner_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d giftpartner"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  giftpartner_pgdata:

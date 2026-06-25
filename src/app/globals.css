@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/*
+  GiftPartner.in design tokens.
+  Palette derived from the approved UI mockups:
+  - Deep navy: primary brand colour (headers, sidebar, primary buttons, headings)
+  - Gold: premium accent (highlights, "Most Popular", italic serif headlines)
+  - Green: WhatsApp / conversion CTAs
+  - Cream + blue tint: alternating section backgrounds
+*/
+
+@theme {
+  /* Brand */
+  --color-navy: #14264f;
+  --color-navy-50: #eef2f9;
+  --color-navy-100: #d6def0;
+  --color-navy-600: #1d335f;
+  --color-navy-700: #16284b;
+  --color-navy-900: #0d1a38;
+
+  --color-gold: #c79a3a;
+  --color-gold-light: #e0bd6b;
+  --color-gold-dark: #a87f27;
+
+  --color-whatsapp: #1fa15a;
+  --color-whatsapp-dark: #178048;
+
+  --color-cream: #faf5ec;
+  --color-cream-200: #f3e9d6;
+  --color-tint: #eff3fb;
+
+  /* Semantic */
+  --color-background: #ffffff;
+  --color-foreground: #1a1d24;
+  --color-muted: #6b7280;
+  --color-border: #e6e8ee;
+  --color-success: #1fa15a;
+  --color-warning: #c79a3a;
+  --color-danger: #d14343;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+
+  /* Radius */
+  --radius-card: 14px;
+
+  /* Container */
+  --breakpoint-3xl: 120rem;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1a1d24;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Reusable layout helpers */
+@utility container-page {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Thin custom scrollbar for the dashboard shell */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
