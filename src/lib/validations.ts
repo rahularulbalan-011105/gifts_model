@@ -28,12 +28,15 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Enter your password"),
 });
 
+// `company` is a honeypot: a hidden field real users never see. Bots that fill
+// every input will set it, letting us silently drop the submission.
 export const shopperRequestSchema = z.object({
   name: z.string().min(2, "Please enter your name").max(80),
   email: z.string().email("Enter a valid email"),
   phone: z.string().min(7, "Enter a valid WhatsApp number").max(20),
   category: z.string().min(1, "Select a category"),
   details: z.string().max(2000).optional().or(z.literal("")),
+  company: z.string().max(0).optional().or(z.literal("")),
 });
 
 export const contactSchema = z.object({
@@ -41,6 +44,7 @@ export const contactSchema = z.object({
   email: z.string().email(),
   phone: z.string().max(20).optional().or(z.literal("")),
   message: z.string().min(5, "Tell us a little more").max(2000),
+  company: z.string().max(0).optional().or(z.literal("")),
 });
 
 export const addressSchema = z.object({

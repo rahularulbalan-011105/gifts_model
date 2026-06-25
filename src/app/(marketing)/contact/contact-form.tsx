@@ -48,6 +48,15 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* Honeypot — hidden from real users, bots tend to fill it. */}
+      <input
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+        {...register("company")}
+      />
       <div>
         <Label htmlFor="c-name">Your Name</Label>
         <Input id="c-name" {...register("name")} />

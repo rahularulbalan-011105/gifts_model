@@ -3,8 +3,14 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validations";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { ACCOUNTS_ENABLED } from "@/lib/site";
 
 export async function POST(req: Request) {
+  // Accounts are disabled — this endpoint is closed.
+  if (!ACCOUNTS_ENABLED) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const ip = clientIp(req);
   const limited = rateLimit(`register:${ip}`, { limit: 5, windowMs: 60_000 });
   if (!limited.ok) {

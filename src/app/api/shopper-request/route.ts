@@ -6,7 +6,7 @@ import { resend, EMAIL_FROM, CONTACT_TO_EMAIL } from "@/lib/email";
 
 export async function POST(req: Request) {
   const ip = clientIp(req);
-  const limited = rateLimit(`shopper:${ip}`, { limit: 8, windowMs: 60_000 });
+  const limited = rateLimit(`shopper:${ip}`, { limit: 4, windowMs: 600_000 });
   if (!limited.ok) {
     return NextResponse.json(
       { error: "Too many requests. Please try again shortly." },
@@ -19,6 +19,12 @@ export async function POST(req: Request) {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
+
+  // Honeypot tripped → pretend success so bots don't learn they were caught.
+  const honeypot = (body as Record<string, unknown> | null)?.company;
+  if (typeof honeypot === "string" && honeypot.trim() !== "") {
+    return NextResponse.json({ ok: true }, { status: 201 });
   }
 
   const parsed = shopperRequestSchema.safeParse(body);

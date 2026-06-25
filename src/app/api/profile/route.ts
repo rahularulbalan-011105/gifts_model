@@ -2,8 +2,13 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { profileSchema } from "@/lib/validations";
+import { ACCOUNTS_ENABLED } from "@/lib/site";
 
 export async function PATCH(req: Request) {
+  if (!ACCOUNTS_ENABLED) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const session = await auth();
   if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

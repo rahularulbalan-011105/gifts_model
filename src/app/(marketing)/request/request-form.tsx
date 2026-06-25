@@ -65,6 +65,15 @@ export function RequestForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* Honeypot — hidden from real users, bots tend to fill it. */}
+      <input
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+        {...register("company")}
+      />
       <div>
         <Label htmlFor="name">Your Name</Label>
         <Input id="name" placeholder="Your full name" {...register("name")} />
